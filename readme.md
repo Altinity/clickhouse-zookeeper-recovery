@@ -1,6 +1,6 @@
 # ClickHouse zookeeper recovery tool
 
-[ClickHouse](https://clickhouse.tech/) uses [ZooKeeper](https://zookeeper.apache.org/) for replication and for coordinating distributed operations on a cluster. While no data is stored in zookeeper (only metadata, like list of parts and their checksums) the zookeeper and metadata there is required to ClickHouse to work.
+[ClickHouse](https://clickhouse.tech/) uses [ZooKeeper](https://zookeeper.apache.org/) for replication and for coordinating distributed operations on a cluster. While no data is stored in zookeeper (only metadata, like list of parts and their checksums) the zookeeper and metadata is required to ClickHouse to work.
 
 So if for some reason you lost your zookeeper data or it's damaged / out of the sync, then your ClickHouse servers will not start (or will start in read-only mode).
 To return it back to a healthy state you you need to recover zookeeper meta information from the existing state of ClickHouse tables.
