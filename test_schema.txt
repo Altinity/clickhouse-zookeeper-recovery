@@ -1,0 +1,31 @@
+systemctl stop clickhouse-server
+rm -rf /var/lib/clickhouse/*
+systemctl start clickhouse-server
+
+clickhouse-client -mn
+
+
+SET max_block_size = 1, min_insert_block_size_bytes = 1, min_insert_block_size_rows = 1;
+
+create table X engine=MergeTree order by tuple() as select * from numbers(1000);
+create table Y engine=MergeTree order by tuple() as select * from numbers(1000);
+
+create table X1 engine=ReplicatedMergeTree('/clickhouse/tables/{database}/{shard}/{table}', '{replica}') order by tuple() as select * from numbers(1000);
+create table Y2 engine=ReplicatedSummingMergeTree('/clickhouse/tables/{database}/{shard}/{table}', '{replica}') order by tuple() as select * from numbers(1000);
+
+create table Z1 engine=Log as select * from numbers(1000);
+create table Z2 engine=TinyLog as select * from numbers(1000);
+create materialized view AAA to Z2 AS SELECT * FROM Z1;
+create view BBBB AS SELECT * FROM Z1;
+
+CREATE TABLE kafka (number UInt64) ENGINE = Kafka() SETTINGS kafka_broker_list = 'localhost:123', kafka_topic_list = 'topic1', kafka_group_name = 'group_name', kafka_format = 'TSV';
+
+create database xxx;
+create table xxx.Z engine=MergeTree order by tuple() as select * from numbers(1000);
+create table xxx.Z3 engine=ReplicatedMergeTree('/clickhouse/tables/{database}/{shard}/{table}', '{replica}') order by tuple() as select * from numbers(1000);
+
+
+systemctl stop clickhouse-server
+rm -rf /var/lib/clickhouse/data
+rm -rf /var/lib/clickhouse/metadata
+systemctl start clickhouse-server
