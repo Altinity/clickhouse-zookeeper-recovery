@@ -73,7 +73,7 @@ All steps (except step 5) may be executed on different replicas at different tim
    sudo ./toolset.sh recover_non_replicated | tee recover_non_replicated_$(date +%Y%m%d_%H%M%S).log
    ```
    
-   That will recover the schema and data from the backup created on p. 3. Replicated table will be recovered w/o replication with another name (with `.recovered_non_repl.` prefix). Merges will be stopped, and we skip Kafka tables to avoid stating of consuming.
+   That will recover the schema and data from the backup created on p. 3. Replicated table will be recovered w/o replication with another name (with `.recovered_non_repl.` prefix). Merges will be stopped, and we skip Kafka tables to avoid starting of consuming.
 
 9) At that point, you can review the state of your data on different replicas.
 
