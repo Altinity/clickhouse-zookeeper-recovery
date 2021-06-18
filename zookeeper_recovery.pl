@@ -522,7 +522,7 @@ sub recover_table_zookeeper_data
 
     push @command_sequence, sprintf('SYSTEM STOP MERGES %s', $full_tmp_table_name);
 
-    push @command_sequence, $original_create_table;
+    push @command_sequence, maybe_add_on_cluster_to_create_statement($original_create_table);
     push @command_sequence, sprintf('SYSTEM STOP MERGES %s', $full_table_name);
 
     if (!$RECOVER_SCHEMA_ONLY)
