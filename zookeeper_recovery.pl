@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Data::Dumper;
+use Data::Dumper; # TODO: not a part of core modules on older perl
 use POSIX();
 use Carp;
 $| = 1; # disable output buffering
@@ -325,13 +325,22 @@ sub print_general_info {
         )
     );
 
-    printlog("Zookeeper:\n%s\n", 
+    printlog("Zookeeper:\n%s\n%s\n", 
         get_clickhouse_query_result("
             SELECT
                 hostName(),
                 *
             FROM " . maybecluster('system.zookeeper') . "
-            WHERE path in ('/', '/clickhouse')
+            WHERE path = '/'
+            ORDER BY hostName(), name",
+            {format => 'PrettyCompactMonoBlock'}
+        ),
+        get_clickhouse_query_result("
+            SELECT
+                hostName(),
+                *
+            FROM " . maybecluster('system.zookeeper') . "
+            WHERE path = '/clickhouse'
             ORDER BY hostName(), name",
             {format => 'PrettyCompactMonoBlock'}
         )
