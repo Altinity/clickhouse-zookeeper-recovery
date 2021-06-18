@@ -529,7 +529,7 @@ sub recover_table_zookeeper_data
     {
         for my $p (@$parts_info)
         {
-            push @command_sequence, sprintf('ALTER TABLE %s %s ATTACH PARTITION ID %s FROM %s',
+            push @command_sequence, sprintf('ALTER TABLE %s %s REPLACE PARTITION ID %s FROM %s',
                                             $full_table_name,
                                             ddl_maybe_oncluster(),
                                             escape_sql_arg($p->{partition_id}),
