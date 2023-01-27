@@ -1,3 +1,12 @@
+# Project is OBSOLETE / not-supported / maitained.
+
+On all modern versions of clickhouse (starting from 21.7) you should use embedded functionality instead (see [SYSTEM RESTORE REPLICA](https://clickhouse.com/docs/en/sql-reference/statements/system/#restore-replica)).
+
+The original contene of the README is below.
+
+<br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br />
+
 # ClickHouse zookeeper recovery tool
 
 [ClickHouse](https://clickhouse.tech/) uses [ZooKeeper](https://zookeeper.apache.org/) for replication and for coordinating distributed operations on a cluster. While no data is stored in zookeeper (only metadata, like list of parts and their checksums) the zookeeper and metadata is required to ClickHouse to work.
